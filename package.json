@@ -1,0 +1,13 @@
+{
+  "name": "buscador-palabras",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "babel public/js/script.js --out-file dist/script.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.29.7",
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7"
+  }
+}
