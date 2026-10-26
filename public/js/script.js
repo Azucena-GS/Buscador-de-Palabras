@@ -7,24 +7,9 @@ const processedText = document.querySelector("#processed-text");
 const countLabel = document.querySelector("#count");
 const clearButton = document.querySelector("#clear-button");
 
-function escapeHtml(value) {
-  return value.replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[character]);
-}
-
-function escapeRegExp(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
 function showAlert(message) {
   alertBox.textContent = message;
   alertBox.hidden = false;
-  results.hidden = true;
 }
 
 function clearAlert() {
@@ -35,6 +20,7 @@ function clearAlert() {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   clearAlert();
+  results.hidden = true;
 
   const text = sourceText.value;
   const term = searchTerm.value;
@@ -51,27 +37,32 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  const matcher = new RegExp(escapeRegExp(term), "giu");
+  const lowerCaseText = text.toLowerCase();
+  const lowerCaseTerm = term.toLowerCase();
   let occurrences = 0;
-  let lastIndex = 0;
-  let highlightedText = "";
+  let lastPosition = 0;
+  let position = lowerCaseText.indexOf(lowerCaseTerm);
 
-  for (const match of text.matchAll(matcher)) {
-    const index = match.index;
-    highlightedText += escapeHtml(text.slice(lastIndex, index));
-    highlightedText += `<mark>${escapeHtml(match[0])}</mark>`;
-    lastIndex = index + match[0].length;
+  processedText.textContent = "";
+
+  while (position !== -1) {
+    processedText.append(document.createTextNode(text.slice(lastPosition, position)));
+
+    const boldWord = document.createElement("strong");
+    boldWord.textContent = text.slice(position, position + term.length);
+    processedText.append(boldWord);
+
+    lastPosition = position + term.length;
     occurrences += 1;
+    position = lowerCaseText.indexOf(lowerCaseTerm, lastPosition);
   }
 
-  highlightedText += escapeHtml(text.slice(lastIndex));
-  processedText.innerHTML = highlightedText;
+  processedText.append(document.createTextNode(text.slice(lastPosition)));
   countLabel.textContent = `${occurrences} ${occurrences === 1 ? "coincidencia" : "coincidencias"}`;
   results.hidden = false;
 
   if (occurrences === 0) {
     showAlert("No se encontraron coincidencias para la búsqueda indicada.");
-    results.hidden = false;
   }
 });
 
