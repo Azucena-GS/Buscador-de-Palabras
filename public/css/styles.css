@@ -22,7 +22,7 @@ body {
 }
 
 main {
-  width: min(100%, 760px);
+  width: min(100%, 820px);
   margin: 0 auto;
 }
 
@@ -47,9 +47,9 @@ h1 {
 }
 
 .subtitle {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   color: #657087;
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   line-height: 1.6;
 }
 
@@ -59,6 +59,44 @@ h1 {
   border-radius: 20px;
   background: #fff;
   box-shadow: 0 18px 55px rgb(35 51 85 / 9%);
+}
+
+.form-section + .form-section {
+  margin-top: 30px;
+  padding-top: 28px;
+  border-top: 1px solid #e8ecf3;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.step-number {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: #edf0ff;
+  color: #4056c5;
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.section-heading h2 {
+  margin: 1px 0 4px;
+  font-size: 1rem;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #7b8597;
+  font-size: 0.86rem;
+  line-height: 1.5;
 }
 
 label {
@@ -105,8 +143,14 @@ input:focus {
   box-shadow: 0 0 0 4px rgb(104 123 232 / 14%);
 }
 
+.term-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
 .search-field {
-  margin-top: 22px;
+  min-width: 0;
 }
 
 .hint {
@@ -118,8 +162,18 @@ input:focus {
 .actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid #e8ecf3;
+}
+
+.main-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 button {
@@ -160,6 +214,17 @@ button:focus-visible {
   background: #e2e7f0;
 }
 
+.text-button {
+  min-height: 42px;
+  padding: 0 12px;
+  background: transparent;
+  color: #657087;
+}
+
+.text-button:hover {
+  background: #f4f6fa;
+}
+
 .alert {
   margin-top: 20px;
   padding: 13px 15px;
@@ -168,6 +233,12 @@ button:focus-visible {
   background: #fff8e9;
   color: #7d4a09;
   line-height: 1.45;
+}
+
+.alert.success {
+  border-color: #b7dfc2;
+  background: #edf9f0;
+  color: #236239;
 }
 
 .alert[hidden],
@@ -231,9 +302,16 @@ mark {
 
   .actions {
     flex-direction: column;
+    align-items: stretch;
   }
 
-  button {
+  .main-actions,
+  .term-fields {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .actions button {
     width: 100%;
   }
 }

@@ -10,24 +10,50 @@
   <main>
     <header class="intro">
       <h1>Buscador de palabras</h1>
+      <p class="subtitle">Encuentra palabras o reemplázalas fácilmente en tu texto.</p>
     </header>
 
-    <section class="panel" aria-label="Búsqueda en texto">
+    <section class="panel" aria-label="Buscar y reemplazar texto">
       <form id="search-form" novalidate>
-        <div>
-          <label for="source-text">Texto</label>
+        <div class="form-section">
+          <div class="section-heading">
+            <span class="step-number" aria-hidden="true">1</span>
+            <div>
+              <h2>Texto original</h2>
+              <p>Pega o escribe el texto que quieres revisar.</p>
+            </div>
+          </div>
           <textarea id="source-text" placeholder="Escribe o pega aquí el texto que quieres revisar..."></textarea>
         </div>
 
-        <div class="search-field">
-          <label for="search-term">Palabra o carácter a buscar</label>
-          <input id="search-term" type="text" placeholder="Por ejemplo: palabra" autocomplete="off">
-          <p class="hint">La búsqueda no distingue entre mayúsculas y minúsculas.</p>
+        <div class="form-section">
+          <div class="section-heading">
+            <span class="step-number" aria-hidden="true">2</span>
+            <div>
+              <h2>Buscar y reemplazar</h2>
+              <p>La búsqueda no distingue entre mayúsculas y minúsculas.</p>
+            </div>
+          </div>
+          <div class="term-fields">
+            <div class="search-field">
+              <label for="search-term">Texto que quieres encontrar</label>
+              <input id="search-term" type="text" placeholder="Por ejemplo: palabra" autocomplete="off">
+            </div>
+
+            <div class="search-field">
+              <label for="replacement-text">Reemplazar por</label>
+              <input id="replacement-text" type="text" placeholder="Escribe el texto nuevo" autocomplete="off">
+              <p class="hint">Déjalo vacío para eliminar las coincidencias.</p>
+            </div>
+          </div>
         </div>
 
         <div class="actions">
-          <button class="primary" type="submit">Buscar</button>
-          <button class="secondary" id="clear-button" type="button">Limpiar</button>
+          <div class="main-actions">
+            <button class="primary" type="submit">Buscar</button>
+            <button class="secondary" id="replace-button" type="button">Reemplazar</button>
+          </div>
+          <button class="text-button" id="clear-button" type="button">Limpiar todo</button>
         </div>
       </form>
 
