@@ -10,6 +10,7 @@ const countLabel = document.querySelector("#count");
 const clearButton = document.querySelector("#clear-button");
 const replaceButton = document.querySelector("#replace-button");
 
+<<<<<<< HEAD
 // Muestra un mensaje de error o de éxito.
 function showAlert(message, isSuccess) {
   alertBox.textContent = message;
@@ -20,6 +21,11 @@ function showAlert(message, isSuccess) {
   } else {
     alertBox.classList.remove("success");
   }
+=======
+function showAlert(message) {
+  alertBox.textContent = message;
+  alertBox.hidden = false;
+>>>>>>> 1e8c22af1fe732da9df322c1b14091f8c628fb1d
 }
 
 // Borra el mensaje que se estaba mostrando.
@@ -55,6 +61,7 @@ function processText(isReplacing) {
     return;
   }
 
+<<<<<<< HEAD
   const textInLowerCase = originalText.toLowerCase();
   const wordInLowerCase = wordToFind.toLowerCase();
   let currentPosition = textInLowerCase.indexOf(wordInLowerCase);
@@ -105,6 +112,34 @@ function processText(isReplacing) {
     countLabel.textContent = numberOfMatches + " reemplazos";
   } else {
     countLabel.textContent = numberOfMatches + " coincidencias";
+=======
+  const lowerCaseText = text.toLowerCase();
+  const lowerCaseTerm = term.toLowerCase();
+  let occurrences = 0;
+  let lastPosition = 0;
+  let position = lowerCaseText.indexOf(lowerCaseTerm);
+
+  processedText.textContent = "";
+
+  while (position !== -1) {
+    processedText.append(document.createTextNode(text.slice(lastPosition, position)));
+
+    const boldWord = document.createElement("strong");
+    boldWord.textContent = text.slice(position, position + term.length);
+    processedText.append(boldWord);
+
+    lastPosition = position + term.length;
+    occurrences += 1;
+    position = lowerCaseText.indexOf(lowerCaseTerm, lastPosition);
+  }
+
+  processedText.append(document.createTextNode(text.slice(lastPosition)));
+  countLabel.textContent = `${occurrences} ${occurrences === 1 ? "coincidencia" : "coincidencias"}`;
+  results.hidden = false;
+
+  if (occurrences === 0) {
+    showAlert("No se encontraron coincidencias para la búsqueda indicada.");
+>>>>>>> 1e8c22af1fe732da9df322c1b14091f8c628fb1d
   }
 
   // Si no encontramos nada, avisamos sin cambiar el texto original.
