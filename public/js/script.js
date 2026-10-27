@@ -10,7 +10,6 @@ const countLabel = document.querySelector("#count");
 const clearButton = document.querySelector("#clear-button");
 const replaceButton = document.querySelector("#replace-button");
 
-<<<<<<< HEAD
 // Muestra un mensaje de error o de éxito.
 function showAlert(message, isSuccess) {
   alertBox.textContent = message;
@@ -21,11 +20,6 @@ function showAlert(message, isSuccess) {
   } else {
     alertBox.classList.remove("success");
   }
-=======
-function showAlert(message) {
-  alertBox.textContent = message;
-  alertBox.hidden = false;
->>>>>>> 1e8c22af1fe732da9df322c1b14091f8c628fb1d
 }
 
 // Borra el mensaje que se estaba mostrando.
@@ -40,10 +34,12 @@ function processText(isReplacing) {
   clearAlert();
   results.hidden = true;
 
+  // Leemos lo que escribió la persona en los campos.
   const originalText = sourceText.value;
   const wordToFind = searchTerm.value;
   let newWord = wordToFind;
 
+  // Si estamos reemplazando, usamos el texto nuevo del segundo campo.
   if (isReplacing) {
     newWord = replacementText.value;
   }
@@ -61,19 +57,27 @@ function processText(isReplacing) {
     return;
   }
 
-<<<<<<< HEAD
+  // Usamos copias en minúsculas para que la búsqueda ignore mayúsculas.
   const textInLowerCase = originalText.toLowerCase();
   const wordInLowerCase = wordToFind.toLowerCase();
+
+  // indexOf devuelve la posición de la coincidencia o -1 si no la encuentra.
   let currentPosition = textInLowerCase.indexOf(wordInLowerCase);
+  // Guarda dónde empieza la parte del texto que todavía no hemos procesado.
   let lastPosition = 0;
+  // Cuenta cuántas veces aparece el texto buscado.
   let numberOfMatches = 0;
+  // Aquí armamos el texto final cuando se realiza un reemplazo.
   let updatedText = "";
 
+  // Quitamos el resultado anterior antes de mostrar el nuevo.
   processedText.textContent = "";
 
   // Recorremos el texto para encontrar cada coincidencia.
   while (currentPosition !== -1) {
+    // Guardamos lo que aparece antes de la coincidencia actual.
     const textBeforeMatch = originalText.slice(lastPosition, currentPosition);
+    // Al buscar mostramos la palabra encontrada; al reemplazar, mostramos la nueva.
     let textToShow = originalText.slice(
       currentPosition,
       currentPosition + wordToFind.length
@@ -86,10 +90,12 @@ function processText(isReplacing) {
     // Agregamos el texto anterior y luego resaltamos la coincidencia.
     processedText.append(document.createTextNode(textBeforeMatch));
 
+    // El elemento <strong> hace que la coincidencia aparezca en negrita.
     const boldText = document.createElement("strong");
     boldText.textContent = textToShow;
     processedText.append(boldText);
 
+    // Construimos el texto actualizado y avanzamos a la siguiente posición.
     updatedText = updatedText + textBeforeMatch + textToShow;
     lastPosition = currentPosition + wordToFind.length;
     numberOfMatches = numberOfMatches + 1;
@@ -100,8 +106,10 @@ function processText(isReplacing) {
   const textAfterMatches = originalText.slice(lastPosition);
   processedText.append(document.createTextNode(textAfterMatches));
   updatedText = updatedText + textAfterMatches;
+  // Mostramos la sección de resultados que estaba oculta.
   results.hidden = false;
 
+  // Actualizamos el contador con el singular o plural correcto.
   if (numberOfMatches === 1) {
     if (isReplacing) {
       countLabel.textContent = "1 reemplazo";
@@ -112,34 +120,6 @@ function processText(isReplacing) {
     countLabel.textContent = numberOfMatches + " reemplazos";
   } else {
     countLabel.textContent = numberOfMatches + " coincidencias";
-=======
-  const lowerCaseText = text.toLowerCase();
-  const lowerCaseTerm = term.toLowerCase();
-  let occurrences = 0;
-  let lastPosition = 0;
-  let position = lowerCaseText.indexOf(lowerCaseTerm);
-
-  processedText.textContent = "";
-
-  while (position !== -1) {
-    processedText.append(document.createTextNode(text.slice(lastPosition, position)));
-
-    const boldWord = document.createElement("strong");
-    boldWord.textContent = text.slice(position, position + term.length);
-    processedText.append(boldWord);
-
-    lastPosition = position + term.length;
-    occurrences += 1;
-    position = lowerCaseText.indexOf(lowerCaseTerm, lastPosition);
-  }
-
-  processedText.append(document.createTextNode(text.slice(lastPosition)));
-  countLabel.textContent = `${occurrences} ${occurrences === 1 ? "coincidencia" : "coincidencias"}`;
-  results.hidden = false;
-
-  if (occurrences === 0) {
-    showAlert("No se encontraron coincidencias para la búsqueda indicada.");
->>>>>>> 1e8c22af1fe732da9df322c1b14091f8c628fb1d
   }
 
   // Si no encontramos nada, avisamos sin cambiar el texto original.
@@ -161,20 +141,26 @@ function processText(isReplacing) {
 
 // Al enviar el formulario, buscamos las coincidencias.
 form.addEventListener("submit", function (event) {
+  // Evitamos que el formulario recargue la página.
   event.preventDefault();
+  // "false" indica que solo queremos buscar, no reemplazar.
   processText(false);
 });
 
 // Al presionar el botón, reemplazamos las coincidencias.
 replaceButton.addEventListener("click", function () {
+  // "true" indica que queremos cambiar el texto encontrado.
   processText(true);
 });
 
 // El botón Limpiar borra los campos y los resultados.
 clearButton.addEventListener("click", function () {
+  // Restablece los campos del formulario a su estado inicial.
   form.reset();
+  // Borra el texto procesado y su contador.
   processedText.textContent = "";
   countLabel.textContent = "";
+  // Oculta los resultados, quita mensajes y vuelve al campo de texto.
   results.hidden = true;
   clearAlert();
   sourceText.focus();
